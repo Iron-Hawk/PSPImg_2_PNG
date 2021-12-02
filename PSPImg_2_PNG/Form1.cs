@@ -712,7 +712,7 @@ namespace PSPImg_2_PNG
                             break;
                     }
                     temp2_col_pal = col_pal_list[p_l];
-                    img_final.SetPixel(current_pixel_w, current_pixel_h, Color.FromArgb((int)temp2_col_pal[0], (int)temp_col_pal[1], (int)temp_col_pal[2], (int)temp_col_pal[3]));
+                    img_final.SetPixel(current_pixel_w, current_pixel_h, Color.FromArgb((int)temp2_col_pal[0], (int)temp2_col_pal[1], (int)temp2_col_pal[2], (int)temp2_col_pal[3]));
                     current_pixel_w++;
                     i++;
                     s_i++;
