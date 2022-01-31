@@ -29,148 +29,148 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.TextFileNameDir = new System.Windows.Forms.Label();
-            this.TextFileName = new System.Windows.Forms.Label();
-            this.TextConverted = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.AlphaOverride_CheckBox = new System.Windows.Forms.CheckBox();
-            this.ExportColorPal_CheckBox = new System.Windows.Forms.CheckBox();
-            this.ToolText = new System.Windows.Forms.Label();
-            this.UseColorPal_CheckBox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.convertIMGToPNGFileButton = new System.Windows.Forms.Button();
+            this.openIMGFileButton = new System.Windows.Forms.Button();
+            this.textOpenedFileDir = new System.Windows.Forms.Label();
+            this.textOpenedFileName = new System.Windows.Forms.Label();
+            this.textConsole = new System.Windows.Forms.Label();
+            this.openPNGFileButton = new System.Windows.Forms.Button();
+            this.convertPNGToIMGFileButton = new System.Windows.Forms.Button();
+            this.imgToPNGText = new System.Windows.Forms.Label();
+            this.alphaOverrideCheckbox = new System.Windows.Forms.CheckBox();
+            this.exportColorPalCheckbox = new System.Windows.Forms.CheckBox();
+            this.textCreatorName = new System.Windows.Forms.Label();
+            this.useColorPalCheckbox = new System.Windows.Forms.CheckBox();
+            this.pngToIMGText = new System.Windows.Forms.Label();
             this.textureDisplayText = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // convertIMGToPNGFileButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(202, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Convert To .png";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.convertIMGToPNGFileButton.Location = new System.Drawing.Point(12, 41);
+            this.convertIMGToPNGFileButton.Name = "convertIMGToPNGFileButton";
+            this.convertIMGToPNGFileButton.Size = new System.Drawing.Size(202, 23);
+            this.convertIMGToPNGFileButton.TabIndex = 0;
+            this.convertIMGToPNGFileButton.Text = "Convert To .png";
+            this.convertIMGToPNGFileButton.UseVisualStyleBackColor = true;
+            this.convertIMGToPNGFileButton.Click += new System.EventHandler(this.convertIMGToPNGFile);
             // 
-            // button2
+            // openIMGFileButton
             // 
-            this.button2.Location = new System.Drawing.Point(12, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(202, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Open .img File";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.openIMGFileButton.Location = new System.Drawing.Point(12, 12);
+            this.openIMGFileButton.Name = "openIMGFileButton";
+            this.openIMGFileButton.Size = new System.Drawing.Size(202, 23);
+            this.openIMGFileButton.TabIndex = 1;
+            this.openIMGFileButton.Text = "Open .img File";
+            this.openIMGFileButton.UseVisualStyleBackColor = true;
+            this.openIMGFileButton.Click += new System.EventHandler(this.openIMGFile);
             // 
-            // TextFileNameDir
+            // textOpenedFileDir
             // 
-            this.TextFileNameDir.AutoSize = true;
-            this.TextFileNameDir.Location = new System.Drawing.Point(9, 190);
-            this.TextFileNameDir.Name = "TextFileNameDir";
-            this.TextFileNameDir.Size = new System.Drawing.Size(135, 13);
-            this.TextFileNameDir.TabIndex = 3;
-            this.TextFileNameDir.Text = "Opened File Directory: N/A";
+            this.textOpenedFileDir.AutoSize = true;
+            this.textOpenedFileDir.Location = new System.Drawing.Point(9, 190);
+            this.textOpenedFileDir.Name = "textOpenedFileDir";
+            this.textOpenedFileDir.Size = new System.Drawing.Size(135, 13);
+            this.textOpenedFileDir.TabIndex = 3;
+            this.textOpenedFileDir.Text = "Opened File Directory: N/A";
             // 
-            // TextFileName
+            // textOpenedFileName
             // 
-            this.TextFileName.AutoSize = true;
-            this.TextFileName.Location = new System.Drawing.Point(9, 212);
-            this.TextFileName.Name = "TextFileName";
-            this.TextFileName.Size = new System.Drawing.Size(121, 13);
-            this.TextFileName.TabIndex = 4;
-            this.TextFileName.Text = "Opened File Name: N/A";
+            this.textOpenedFileName.AutoSize = true;
+            this.textOpenedFileName.Location = new System.Drawing.Point(9, 212);
+            this.textOpenedFileName.Name = "textOpenedFileName";
+            this.textOpenedFileName.Size = new System.Drawing.Size(121, 13);
+            this.textOpenedFileName.TabIndex = 4;
+            this.textOpenedFileName.Text = "Opened File Name: N/A";
             // 
-            // TextConverted
+            // textConsole
             // 
-            this.TextConverted.AutoSize = true;
-            this.TextConverted.Location = new System.Drawing.Point(9, 234);
-            this.TextConverted.Name = "TextConverted";
-            this.TextConverted.Size = new System.Drawing.Size(122, 13);
-            this.TextConverted.TabIndex = 5;
-            this.TextConverted.Text = "Console Messages: N/A";
+            this.textConsole.AutoSize = true;
+            this.textConsole.Location = new System.Drawing.Point(9, 234);
+            this.textConsole.Name = "textConsole";
+            this.textConsole.Size = new System.Drawing.Size(122, 13);
+            this.textConsole.TabIndex = 5;
+            this.textConsole.Text = "Console Messages: N/A";
             // 
-            // button3
+            // openPNGFileButton
             // 
-            this.button3.Location = new System.Drawing.Point(12, 98);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(202, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Open .png";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.openPNGFileButton.Location = new System.Drawing.Point(12, 98);
+            this.openPNGFileButton.Name = "openPNGFileButton";
+            this.openPNGFileButton.Size = new System.Drawing.Size(202, 23);
+            this.openPNGFileButton.TabIndex = 6;
+            this.openPNGFileButton.Text = "Open .png";
+            this.openPNGFileButton.UseVisualStyleBackColor = true;
+            this.openPNGFileButton.Click += new System.EventHandler(this.openPNGFile);
             // 
-            // button4
+            // convertPNGToIMGFileButton
             // 
-            this.button4.Location = new System.Drawing.Point(12, 127);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(202, 23);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Convert To .img";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.convertPNGToIMGFileButton.Location = new System.Drawing.Point(12, 127);
+            this.convertPNGToIMGFileButton.Name = "convertPNGToIMGFileButton";
+            this.convertPNGToIMGFileButton.Size = new System.Drawing.Size(202, 23);
+            this.convertPNGToIMGFileButton.TabIndex = 7;
+            this.convertPNGToIMGFileButton.Text = "Convert To .img";
+            this.convertPNGToIMGFileButton.UseVisualStyleBackColor = true;
+            this.convertPNGToIMGFileButton.Click += new System.EventHandler(this.convertPNGToIMGFile);
             // 
-            // label1
+            // imgToPNGText
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(240, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 16);
-            this.label1.TabIndex = 8;
-            this.label1.Text = ".img to .png options";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.imgToPNGText.AutoSize = true;
+            this.imgToPNGText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.imgToPNGText.Location = new System.Drawing.Point(240, 12);
+            this.imgToPNGText.Name = "imgToPNGText";
+            this.imgToPNGText.Size = new System.Drawing.Size(123, 16);
+            this.imgToPNGText.TabIndex = 8;
+            this.imgToPNGText.Text = ".img to .png options";
+            this.imgToPNGText.Click += new System.EventHandler(this.label1_Click);
             // 
-            // AlphaOverride_CheckBox
+            // alphaOverrideCheckbox
             // 
-            this.AlphaOverride_CheckBox.AutoSize = true;
-            this.AlphaOverride_CheckBox.Location = new System.Drawing.Point(243, 41);
-            this.AlphaOverride_CheckBox.Name = "AlphaOverride_CheckBox";
-            this.AlphaOverride_CheckBox.Size = new System.Drawing.Size(257, 17);
-            this.AlphaOverride_CheckBox.TabIndex = 9;
-            this.AlphaOverride_CheckBox.Text = "Override .img Alpha (Makes all alpha values max)";
-            this.AlphaOverride_CheckBox.UseVisualStyleBackColor = true;
+            this.alphaOverrideCheckbox.AutoSize = true;
+            this.alphaOverrideCheckbox.Location = new System.Drawing.Point(243, 41);
+            this.alphaOverrideCheckbox.Name = "alphaOverrideCheckbox";
+            this.alphaOverrideCheckbox.Size = new System.Drawing.Size(257, 17);
+            this.alphaOverrideCheckbox.TabIndex = 9;
+            this.alphaOverrideCheckbox.Text = "Override .img Alpha (Makes all alpha values max)";
+            this.alphaOverrideCheckbox.UseVisualStyleBackColor = true;
             // 
-            // ExportColorPal_CheckBox
+            // exportColorPalCheckbox
             // 
-            this.ExportColorPal_CheckBox.AutoSize = true;
-            this.ExportColorPal_CheckBox.Location = new System.Drawing.Point(243, 64);
-            this.ExportColorPal_CheckBox.Name = "ExportColorPal_CheckBox";
-            this.ExportColorPal_CheckBox.Size = new System.Drawing.Size(318, 17);
-            this.ExportColorPal_CheckBox.TabIndex = 10;
-            this.ExportColorPal_CheckBox.Text = "Export color pal as separate .png (Only on .img with color pals)";
-            this.ExportColorPal_CheckBox.UseVisualStyleBackColor = true;
+            this.exportColorPalCheckbox.AutoSize = true;
+            this.exportColorPalCheckbox.Location = new System.Drawing.Point(243, 64);
+            this.exportColorPalCheckbox.Name = "exportColorPalCheckbox";
+            this.exportColorPalCheckbox.Size = new System.Drawing.Size(318, 17);
+            this.exportColorPalCheckbox.TabIndex = 10;
+            this.exportColorPalCheckbox.Text = "Export color pal as separate .png (Only on .img with color pals)";
+            this.exportColorPalCheckbox.UseVisualStyleBackColor = true;
             // 
-            // ToolText
+            // textCreatorName
             // 
-            this.ToolText.AutoSize = true;
-            this.ToolText.Location = new System.Drawing.Point(752, 234);
-            this.ToolText.Name = "ToolText";
-            this.ToolText.Size = new System.Drawing.Size(125, 13);
-            this.ToolText.TabIndex = 11;
-            this.ToolText.Text = "Tool Made By Iron Hawk";
+            this.textCreatorName.AutoSize = true;
+            this.textCreatorName.Location = new System.Drawing.Point(752, 234);
+            this.textCreatorName.Name = "textCreatorName";
+            this.textCreatorName.Size = new System.Drawing.Size(125, 13);
+            this.textCreatorName.TabIndex = 11;
+            this.textCreatorName.Text = "Tool Made By Iron Hawk";
             // 
-            // UseColorPal_CheckBox
+            // useColorPalCheckbox
             // 
-            this.UseColorPal_CheckBox.AutoSize = true;
-            this.UseColorPal_CheckBox.Location = new System.Drawing.Point(243, 127);
-            this.UseColorPal_CheckBox.Name = "UseColorPal_CheckBox";
-            this.UseColorPal_CheckBox.Size = new System.Drawing.Size(349, 17);
-            this.UseColorPal_CheckBox.TabIndex = 13;
-            this.UseColorPal_CheckBox.Text = "Use color pal (Make sure image is 256 colors or less when using this)";
-            this.UseColorPal_CheckBox.UseVisualStyleBackColor = true;
+            this.useColorPalCheckbox.AutoSize = true;
+            this.useColorPalCheckbox.Location = new System.Drawing.Point(243, 127);
+            this.useColorPalCheckbox.Name = "useColorPalCheckbox";
+            this.useColorPalCheckbox.Size = new System.Drawing.Size(349, 17);
+            this.useColorPalCheckbox.TabIndex = 13;
+            this.useColorPalCheckbox.Text = "Use color pal (Make sure image is 256 colors or less when using this)";
+            this.useColorPalCheckbox.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // pngToIMGText
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(240, 98);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 16);
-            this.label2.TabIndex = 12;
-            this.label2.Text = ".png to .img options";
+            this.pngToIMGText.AutoSize = true;
+            this.pngToIMGText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pngToIMGText.Location = new System.Drawing.Point(240, 98);
+            this.pngToIMGText.Name = "pngToIMGText";
+            this.pngToIMGText.Size = new System.Drawing.Size(123, 16);
+            this.pngToIMGText.TabIndex = 12;
+            this.pngToIMGText.Text = ".png to .img options";
             // 
             // textureDisplayText
             // 
@@ -186,19 +186,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 256);
             this.Controls.Add(this.textureDisplayText);
-            this.Controls.Add(this.UseColorPal_CheckBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.ToolText);
-            this.Controls.Add(this.ExportColorPal_CheckBox);
-            this.Controls.Add(this.AlphaOverride_CheckBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.TextConverted);
-            this.Controls.Add(this.TextFileName);
-            this.Controls.Add(this.TextFileNameDir);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.useColorPalCheckbox);
+            this.Controls.Add(this.pngToIMGText);
+            this.Controls.Add(this.textCreatorName);
+            this.Controls.Add(this.exportColorPalCheckbox);
+            this.Controls.Add(this.alphaOverrideCheckbox);
+            this.Controls.Add(this.imgToPNGText);
+            this.Controls.Add(this.convertPNGToIMGFileButton);
+            this.Controls.Add(this.openPNGFileButton);
+            this.Controls.Add(this.textConsole);
+            this.Controls.Add(this.textOpenedFileName);
+            this.Controls.Add(this.textOpenedFileDir);
+            this.Controls.Add(this.openIMGFileButton);
+            this.Controls.Add(this.convertIMGToPNGFileButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "PSP .img to .png";
@@ -210,19 +210,19 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label TextFileNameDir;
-        private System.Windows.Forms.Label TextFileName;
-        private System.Windows.Forms.Label TextConverted;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox AlphaOverride_CheckBox;
-        private System.Windows.Forms.CheckBox ExportColorPal_CheckBox;
-        private System.Windows.Forms.Label ToolText;
-        private System.Windows.Forms.CheckBox UseColorPal_CheckBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button convertIMGToPNGFileButton;
+        private System.Windows.Forms.Button openIMGFileButton;
+        private System.Windows.Forms.Label textOpenedFileDir;
+        private System.Windows.Forms.Label textOpenedFileName;
+        private System.Windows.Forms.Label textConsole;
+        private System.Windows.Forms.Button openPNGFileButton;
+        private System.Windows.Forms.Button convertPNGToIMGFileButton;
+        private System.Windows.Forms.Label imgToPNGText;
+        private System.Windows.Forms.CheckBox alphaOverrideCheckbox;
+        private System.Windows.Forms.CheckBox exportColorPalCheckbox;
+        private System.Windows.Forms.Label textCreatorName;
+        private System.Windows.Forms.CheckBox useColorPalCheckbox;
+        private System.Windows.Forms.Label pngToIMGText;
         private System.Windows.Forms.Label textureDisplayText;
     }
 }
