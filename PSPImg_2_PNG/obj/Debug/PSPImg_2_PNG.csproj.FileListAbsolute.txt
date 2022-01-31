@@ -1,8 +1,0 @@
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\obj\Debug\PSPImg_2_PNG.Form1.resources
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\obj\Debug\PSPImg_2_PNG.csproj.GenerateResource.cache
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\bin\Debug\PSPImg_2_PNG.exe.config
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\bin\Debug\PSPImg_2_PNG.exe
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\bin\Debug\PSPImg_2_PNG.pdb
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\obj\Debug\PSPImg_2_PNG.exe
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\obj\Debug\PSPImg_2_PNG.pdb
-C:\Users\Johnathan\source\repos\PSPImg_2_PNG\PSPImg_2_PNG\obj\Debug\PSPimgtopng.Properties.Resources.resources
