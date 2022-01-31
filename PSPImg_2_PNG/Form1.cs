@@ -37,16 +37,16 @@ namespace PSPImg_2_PNG
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 fileLoadedIMG = 1;
-                textOpenedFileDir.Text = "Opened File Directory: " + ofd.FileName;
-                textOpenedFileName.Text = "Opened File Name: " + ofd.SafeFileName;
-                textConsole.Text = "Console Messages: N/A";
+                openedFileDirText.Text = "Opened File Directory: " + ofd.FileName;
+                openedFileNameText.Text = "Opened File Name: " + ofd.SafeFileName;
+                consoleText.Text = "Console Messages: N/A";
             }
             else
             {
                 fileLoadedIMG = 0;
-                textOpenedFileDir.Text = "Opened File Directory: N/A";
-                textOpenedFileName.Text = "Opened File Name: N/A";
-                textConsole.Text = "Console Messages: No File Was Selected";
+                openedFileDirText.Text = "Opened File Directory: N/A";
+                openedFileNameText.Text = "Opened File Name: N/A";
+                consoleText.Text = "Console Messages: No File Was Selected";
             }
         }
 
@@ -54,12 +54,12 @@ namespace PSPImg_2_PNG
         {
             if (fileLoadedIMG == 1)
             {
-                textConsole.Text = "Console Messages: Converting... Please wait...";
+                consoleText.Text = "Console Messages: Converting... Please wait...";
                 IntDoesFileHaveColorPalCheck();
             }
             else
             {
-                textConsole.Text = "Console Messages: There is no .img file loaded";
+                consoleText.Text = "Console Messages: There is no .img file loaded";
             }
         }
 
@@ -127,7 +127,7 @@ namespace PSPImg_2_PNG
                 }
                 else
                 {
-                    textConsole.Text = "Console Messages: IMG files without color pal should not be swizzled?!?";
+                    consoleText.Text = "Console Messages: IMG files without color pal should not be swizzled?!?";
                 }
 
             }
@@ -239,11 +239,11 @@ namespace PSPImg_2_PNG
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 imageColorPal.Save(sfd.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
             {
-                    textConsole.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
+                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
             }
             }
 
@@ -388,7 +388,7 @@ namespace PSPImg_2_PNG
             if (sfd2.ShowDialog() == DialogResult.OK)
             {
                 imageFinal.Save(sfd2.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
 
         }
@@ -459,11 +459,11 @@ namespace PSPImg_2_PNG
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     imageColorPal.Save(sfd.FileName);
-                    textConsole.Text = "Console Messages: File has been converted and saved";
+                    consoleText.Text = "Console Messages: File has been converted and saved";
                 }
                 else
                 {
-                    textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                    consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
                 }
             }
 
@@ -733,11 +733,11 @@ namespace PSPImg_2_PNG
             if (sfd2.ShowDialog() == DialogResult.OK)
             {
                 imageFinal.Save(sfd2.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
             {
-                textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
         }
 
@@ -808,11 +808,11 @@ namespace PSPImg_2_PNG
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 imageColorPal.Save(sfd.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
                 {
-                    textConsole.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
+                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
                 }
             }
 
@@ -841,11 +841,11 @@ namespace PSPImg_2_PNG
             if (sfd2.ShowDialog() == DialogResult.OK)
             {
                 imageFinal.Save(sfd2.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
             {
-                textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
         }
 
@@ -1210,11 +1210,11 @@ namespace PSPImg_2_PNG
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     imageColorPal.Save(sfd.FileName);
-                    textConsole.Text = "Console Messages: File has been converted and saved";
+                    consoleText.Text = "Console Messages: File has been converted and saved";
                 }
                 else
                 {
-                    textConsole.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
+                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
                 }
             }
 
@@ -1243,11 +1243,11 @@ namespace PSPImg_2_PNG
             if (sfd2.ShowDialog() == DialogResult.OK)
             {
                 imageFinal.Save(sfd2.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
             {
-                textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
         }
 
@@ -1318,11 +1318,11 @@ namespace PSPImg_2_PNG
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     imageColorPal.Save(sfd.FileName);
-                    textConsole.Text = "Console Messages: File has been converted and saved";
+                    consoleText.Text = "Console Messages: File has been converted and saved";
                 }
                 else
                 {
-                    textConsole.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
+                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
                 }
             }
 
@@ -1476,11 +1476,11 @@ namespace PSPImg_2_PNG
             if (sfd2.ShowDialog() == DialogResult.OK)
             {
                 imageFinal.Save(sfd2.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
             {
-                textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
         }
 
@@ -1844,11 +1844,11 @@ namespace PSPImg_2_PNG
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     imageColorPal.Save(sfd.FileName);
-                    textConsole.Text = "Console Messages: File has been converted and saved";
+                    consoleText.Text = "Console Messages: File has been converted and saved";
                 }
                 else
                 {
-                    textConsole.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
+                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
                 }
             }
 
@@ -2002,11 +2002,11 @@ namespace PSPImg_2_PNG
             if (sfd2.ShowDialog() == DialogResult.OK)
             {
                 imageFinal.Save(sfd2.FileName);
-                textConsole.Text = "Console Messages: File has been converted and saved";
+                consoleText.Text = "Console Messages: File has been converted and saved";
             }
             else
             {
-                textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
         }
 
@@ -2050,11 +2050,11 @@ namespace PSPImg_2_PNG
                 if (sfd2.ShowDialog() == DialogResult.OK)
                 {
                     imageFinal2.Save(sfd2.FileName);
-                    textConsole.Text = "Console Messages: File has been converted and saved";
+                    consoleText.Text = "Console Messages: File has been converted and saved";
                 }
                 else
             {
-                textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
         }
 
@@ -2065,16 +2065,16 @@ namespace PSPImg_2_PNG
             if (ofd2.ShowDialog() == DialogResult.OK)
             {
                 fileLoadedPNG = 1;
-                textOpenedFileDir.Text = "Opened File Directory: " + ofd2.FileName;
-                textOpenedFileName.Text = "Opened File Name: " + ofd2.SafeFileName;
-                textConsole.Text = "Console Messages: N/A";
+                openedFileDirText.Text = "Opened File Directory: " + ofd2.FileName;
+                openedFileNameText.Text = "Opened File Name: " + ofd2.SafeFileName;
+                consoleText.Text = "Console Messages: N/A";
             }
             else
             {
                 fileLoadedPNG = 0;
-                textOpenedFileDir.Text = "Opened File Directory: N/A";
-                textOpenedFileName.Text = "Opened File Name: N/A";
-                textConsole.Text = "Console Messages: No File Was Selected";
+                openedFileDirText.Text = "Opened File Directory: N/A";
+                openedFileNameText.Text = "Opened File Name: N/A";
+                consoleText.Text = "Console Messages: No File Was Selected";
             }
         }
 
@@ -2082,7 +2082,7 @@ namespace PSPImg_2_PNG
         {
             if (fileLoadedPNG == 1)
             {
-                textConsole.Text = "Console Messages: Converting... Please wait...";
+                consoleText.Text = "Console Messages: Converting... Please wait...";
                 sfd3.Filter = "All files (*.*)|*.*";
                 sfd3.SupportMultiDottedExtensions = true;
 
@@ -2154,7 +2154,7 @@ namespace PSPImg_2_PNG
                                 }
                                 if (colorPalListLength > 256)
                                 {
-                                    textConsole.Text = "Console Messages: .png has over 256 colors and cannot be converted";
+                                    consoleText.Text = "Console Messages: .png has over 256 colors and cannot be converted";
                                 }
                                 else
                                 {
@@ -2179,7 +2179,7 @@ namespace PSPImg_2_PNG
                                             currentPixelWidth = 0;
                                         }
                                     }
-                                    textConsole.Text = "Console Messages: File has been converted and saved";
+                                    consoleText.Text = "Console Messages: File has been converted and saved";
                                 }
                         }
                         else
@@ -2213,19 +2213,19 @@ namespace PSPImg_2_PNG
                                     currentPixelWidth = 0;
                                 }
                             }
-                            textConsole.Text = "Console Messages: File has been converted and saved";
+                            consoleText.Text = "Console Messages: File has been converted and saved";
                         }
                         fileStream.Close();
                     }
                 }
                 else
                 {
-                    textConsole.Text = "Console Messages: Saving file was canceled, process has been ended";
+                    consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
                 }
             }
             else
             {
-                textConsole.Text = "Console Messages: There is no .png file loaded";
+                consoleText.Text = "Console Messages: There is no .png file loaded";
             }
         }
 

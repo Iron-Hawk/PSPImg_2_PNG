@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.convertIMGToPNGFileButton = new System.Windows.Forms.Button();
             this.openIMGFileButton = new System.Windows.Forms.Button();
-            this.textOpenedFileDir = new System.Windows.Forms.Label();
-            this.textOpenedFileName = new System.Windows.Forms.Label();
-            this.textConsole = new System.Windows.Forms.Label();
+            this.openedFileDirText = new System.Windows.Forms.Label();
+            this.openedFileNameText = new System.Windows.Forms.Label();
+            this.consoleText = new System.Windows.Forms.Label();
             this.openPNGFileButton = new System.Windows.Forms.Button();
             this.convertPNGToIMGFileButton = new System.Windows.Forms.Button();
             this.imgToPNGText = new System.Windows.Forms.Label();
@@ -65,32 +65,32 @@
             this.openIMGFileButton.UseVisualStyleBackColor = true;
             this.openIMGFileButton.Click += new System.EventHandler(this.openIMGFile);
             // 
-            // textOpenedFileDir
+            // openedFileDirText
             // 
-            this.textOpenedFileDir.AutoSize = true;
-            this.textOpenedFileDir.Location = new System.Drawing.Point(9, 190);
-            this.textOpenedFileDir.Name = "textOpenedFileDir";
-            this.textOpenedFileDir.Size = new System.Drawing.Size(135, 13);
-            this.textOpenedFileDir.TabIndex = 3;
-            this.textOpenedFileDir.Text = "Opened File Directory: N/A";
+            this.openedFileDirText.AutoSize = true;
+            this.openedFileDirText.Location = new System.Drawing.Point(9, 190);
+            this.openedFileDirText.Name = "openedFileDirText";
+            this.openedFileDirText.Size = new System.Drawing.Size(135, 13);
+            this.openedFileDirText.TabIndex = 3;
+            this.openedFileDirText.Text = "Opened File Directory: N/A";
             // 
-            // textOpenedFileName
+            // openedFileNameText
             // 
-            this.textOpenedFileName.AutoSize = true;
-            this.textOpenedFileName.Location = new System.Drawing.Point(9, 212);
-            this.textOpenedFileName.Name = "textOpenedFileName";
-            this.textOpenedFileName.Size = new System.Drawing.Size(121, 13);
-            this.textOpenedFileName.TabIndex = 4;
-            this.textOpenedFileName.Text = "Opened File Name: N/A";
+            this.openedFileNameText.AutoSize = true;
+            this.openedFileNameText.Location = new System.Drawing.Point(9, 212);
+            this.openedFileNameText.Name = "openedFileNameText";
+            this.openedFileNameText.Size = new System.Drawing.Size(121, 13);
+            this.openedFileNameText.TabIndex = 4;
+            this.openedFileNameText.Text = "Opened File Name: N/A";
             // 
-            // textConsole
+            // consoleText
             // 
-            this.textConsole.AutoSize = true;
-            this.textConsole.Location = new System.Drawing.Point(9, 234);
-            this.textConsole.Name = "textConsole";
-            this.textConsole.Size = new System.Drawing.Size(122, 13);
-            this.textConsole.TabIndex = 5;
-            this.textConsole.Text = "Console Messages: N/A";
+            this.consoleText.AutoSize = true;
+            this.consoleText.Location = new System.Drawing.Point(9, 234);
+            this.consoleText.Name = "consoleText";
+            this.consoleText.Size = new System.Drawing.Size(122, 13);
+            this.consoleText.TabIndex = 5;
+            this.consoleText.Text = "Console Messages: N/A";
             // 
             // openPNGFileButton
             // 
@@ -194,9 +194,9 @@
             this.Controls.Add(this.imgToPNGText);
             this.Controls.Add(this.convertPNGToIMGFileButton);
             this.Controls.Add(this.openPNGFileButton);
-            this.Controls.Add(this.textConsole);
-            this.Controls.Add(this.textOpenedFileName);
-            this.Controls.Add(this.textOpenedFileDir);
+            this.Controls.Add(this.consoleText);
+            this.Controls.Add(this.openedFileNameText);
+            this.Controls.Add(this.openedFileDirText);
             this.Controls.Add(this.openIMGFileButton);
             this.Controls.Add(this.convertIMGToPNGFileButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -212,9 +212,9 @@
 
         private System.Windows.Forms.Button convertIMGToPNGFileButton;
         private System.Windows.Forms.Button openIMGFileButton;
-        private System.Windows.Forms.Label textOpenedFileDir;
-        private System.Windows.Forms.Label textOpenedFileName;
-        private System.Windows.Forms.Label textConsole;
+        private System.Windows.Forms.Label openedFileDirText;
+        private System.Windows.Forms.Label openedFileNameText;
+        private System.Windows.Forms.Label consoleText;
         private System.Windows.Forms.Button openPNGFileButton;
         private System.Windows.Forms.Button convertPNGToIMGFileButton;
         private System.Windows.Forms.Label imgToPNGText;
