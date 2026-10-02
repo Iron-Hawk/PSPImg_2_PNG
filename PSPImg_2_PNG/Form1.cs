@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PSPImg_2_PNG
 {
@@ -25,6 +28,11 @@ namespace PSPImg_2_PNG
         public int colorPalDataOver16 = 0;
         public int colorPalDataOver128 = 0;
         public int isSwizzled = 0;
+        public string curPNG;
+        public string savIMG;
+        public string curIMG;
+        public string savPNG;
+        public string savPNG2;
         public Form1()
         {
             InitializeComponent();
@@ -50,11 +58,28 @@ namespace PSPImg_2_PNG
             }
         }
 
+        private void batchIMGToPNG(object sender, EventArgs e)
+        {
+            string folderPath = (Path.GetDirectoryName(ofd.FileName));
+
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+
+            FileInfo[] Files = d.GetFiles("*.img.psp");
+
+            foreach (FileInfo file in Files)
+            {
+                curIMG = file.FullName;
+                IntDoesFileHaveColorPalCheck();
+            }
+            consoleText.Text = "Console Messages: Files has been converted and saved";
+        }
+
         private void convertIMGToPNGFile(object sender, EventArgs e)
         {
             if (fileLoadedIMG == 1)
             {
                 consoleText.Text = "Console Messages: Converting... Please wait...";
+                curIMG = ofd.FileName;
                 IntDoesFileHaveColorPalCheck();
             }
             else
@@ -65,9 +90,9 @@ namespace PSPImg_2_PNG
 
         public void IntDoesFileHaveColorPalCheck()
         {
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int dataAmountWithoutHeader = unchecked((int)byteTotal) - 32;
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(26, SeekOrigin.Begin);
             byte[] swizzleCheck = reader.ReadBytes(2);
             string swizzleCheckString = BitConverter.ToString(swizzleCheck);
@@ -174,7 +199,7 @@ namespace PSPImg_2_PNG
 
         public void ConvertImgToPNGWithColorPal16()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -190,7 +215,7 @@ namespace PSPImg_2_PNG
             int[] tempColorPal2 = new int[4] { 128, 128, 128, 128 };
 
             int pixelAmount = imageWidth * imageHeight / 2;
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int pixelDataOffset = unchecked((int)byteTotal) - pixelAmount;
             int colorPalLength = (pixelDataOffset - 32) / 4;
             int colorPalLengthForWidth = colorPalLength * 10;
@@ -233,18 +258,8 @@ namespace PSPImg_2_PNG
             }
             if (exportColorPalCheckbox.Checked)
             {
-            sfd.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd.SupportMultiDottedExtensions = true;
-
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                imageColorPal.Save(sfd.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-            {
-                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
-            }
+                savPNG2 = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(curIMG)) + "_COLPAL.png");
+                imageColorPal.Save(savPNG2);
             }
 
             int iIndex = 0;
@@ -382,20 +397,15 @@ namespace PSPImg_2_PNG
                     }
                 }
             }
-            sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd2.SupportMultiDottedExtensions = true;
-
-            if (sfd2.ShowDialog() == DialogResult.OK)
-            {
-                imageFinal.Save(sfd2.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         public void ConvertImgToPNGWithColorPal16Swizzled()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -410,7 +420,7 @@ namespace PSPImg_2_PNG
             int[] tempColorPal = new int[4] { 128, 128, 128, 128 };
             int[] tempColorPal2 = new int[4] { 128, 128, 128, 128 };
             int pixelAmount = imageWidth * imageHeight / 2;
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int pixelDataOffset = unchecked((int)byteTotal) - pixelAmount;
             int colorPalLength = (pixelDataOffset - 32) / 4;
             int colorPalLengthForWidth = colorPalLength * 10;
@@ -453,18 +463,8 @@ namespace PSPImg_2_PNG
             }
             if (exportColorPalCheckbox.Checked)
             {
-                sfd.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-                sfd.SupportMultiDottedExtensions = true;
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    imageColorPal.Save(sfd.FileName);
-                    consoleText.Text = "Console Messages: File has been converted and saved";
-                }
-                else
-                {
-                    consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
-                }
+                savPNG2 = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(curIMG)) + "_COLPAL.png");
+                imageColorPal.Save(savPNG2);
             }
 
             int iIndex = 0;
@@ -727,23 +727,15 @@ namespace PSPImg_2_PNG
                     }
                 }
             }
-            sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd2.SupportMultiDottedExtensions = true;
-
-            if (sfd2.ShowDialog() == DialogResult.OK)
-            {
-                imageFinal.Save(sfd2.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-            {
-                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
-            }
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         public void ConvertImgToPNGWithColorPal256()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -759,7 +751,7 @@ namespace PSPImg_2_PNG
             int[] tempColorPal2 = new int[4] { 128, 128, 128, 128 };
 
             int pixelAmount = imageWidth * imageHeight;
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int pixelDataOffset = unchecked((int)byteTotal) - pixelAmount;
             int colorPalLength = (pixelDataOffset - 32) / 4;
             int colorPalLengthForWidth = colorPalLength * 10;
@@ -802,18 +794,8 @@ namespace PSPImg_2_PNG
             }
             if (exportColorPalCheckbox.Checked)
             {
-            sfd.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd.SupportMultiDottedExtensions = true;
-
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                imageColorPal.Save(sfd.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-                {
-                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
-                }
+                savPNG2 = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(curIMG)) + "_COLPAL.png");
+                imageColorPal.Save(savPNG2);
             }
 
             int iIndex = 0;
@@ -835,23 +817,15 @@ namespace PSPImg_2_PNG
                     }
                 }
             }
-            sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd2.SupportMultiDottedExtensions = true;
-
-            if (sfd2.ShowDialog() == DialogResult.OK)
-            {
-                imageFinal.Save(sfd2.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-            {
-                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
-            }
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         public void ConvertImgToPNGWithColorPal256Halfed()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -867,7 +841,7 @@ namespace PSPImg_2_PNG
             int[] tempColorPal2 = new int[4] { 128, 128, 128, 128 };
 
             int pixelAmount = imageWidth * imageHeight;
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int pixelDataOffset = unchecked((int)byteTotal) - pixelAmount;
             int colorPalLength = (pixelDataOffset - 32) / 2;
             int colorPalLengthForWidth = colorPalLength * 10;
@@ -1204,18 +1178,8 @@ namespace PSPImg_2_PNG
             }
             if (exportColorPalCheckbox.Checked)
             {
-                sfd.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-                sfd.SupportMultiDottedExtensions = true;
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    imageColorPal.Save(sfd.FileName);
-                    consoleText.Text = "Console Messages: File has been converted and saved";
-                }
-                else
-                {
-                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
-                }
+                savPNG2 = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(curIMG)) + "_COLPAL.png");
+                imageColorPal.Save(savPNG2);
             }
 
             int iIndex = 0;
@@ -1237,23 +1201,15 @@ namespace PSPImg_2_PNG
                     }
                 }
             }
-            sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd2.SupportMultiDottedExtensions = true;
-
-            if (sfd2.ShowDialog() == DialogResult.OK)
-            {
-                imageFinal.Save(sfd2.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-            {
-                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
-            }
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         public void ConvertImgToPNGWithColorPal256Swizzled()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -1269,7 +1225,7 @@ namespace PSPImg_2_PNG
             int[] tempColorPal2 = new int[4] { 128, 128, 128, 128 };
 
             int pixelAmount = imageWidth * imageHeight;
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int pixelDataOffset = unchecked((int)byteTotal) - pixelAmount;
             int colorPalLength = (pixelDataOffset - 32) / 4;
             int colorPalLengthForWidth = colorPalLength * 10;
@@ -1312,18 +1268,8 @@ namespace PSPImg_2_PNG
             }
             if (exportColorPalCheckbox.Checked)
             {
-                sfd.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-                sfd.SupportMultiDottedExtensions = true;
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    imageColorPal.Save(sfd.FileName);
-                    consoleText.Text = "Console Messages: File has been converted and saved";
-                }
-                else
-                {
-                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
-                }
+                savPNG2 = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(curIMG)) + "_COLPAL.png");
+                imageColorPal.Save(savPNG2);
             }
 
             int iIndex = 0;
@@ -1470,23 +1416,15 @@ namespace PSPImg_2_PNG
                     }
                 }
             }
-            sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd2.SupportMultiDottedExtensions = true;
-
-            if (sfd2.ShowDialog() == DialogResult.OK)
-            {
-                imageFinal.Save(sfd2.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-            {
-                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
-            }
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         public void ConvertImgToPNGWithColorPal256HalfedSwizzled()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -1501,7 +1439,7 @@ namespace PSPImg_2_PNG
             int[] tempColorPal = new int[4] { 128, 128, 128, 128 };
             int[] tempColorPal2 = new int[4] { 128, 128, 128, 128 };
             int pixelAmount = imageWidth * imageHeight;
-            long byteTotal = new FileInfo(ofd.FileName).Length;
+            long byteTotal = new FileInfo(curIMG).Length;
             int pixelDataOffset = unchecked((int)byteTotal) - pixelAmount;
             int colorPalLength = (pixelDataOffset - 32) / 2;
             int colorPalLengthForWidth = colorPalLength * 10;
@@ -1838,18 +1776,8 @@ namespace PSPImg_2_PNG
             }
             if (exportColorPalCheckbox.Checked)
             {
-                sfd.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-                sfd.SupportMultiDottedExtensions = true;
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    imageColorPal.Save(sfd.FileName);
-                    consoleText.Text = "Console Messages: File has been converted and saved";
-                }
-                else
-                {
-                    consoleText.Text = "Console Messages: Saving color pal file was canceled, but we must continue on";
-                }
+                savPNG2 = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(curIMG)) + "_COLPAL.png");
+                imageColorPal.Save(savPNG2);
             }
 
             int iIndex = 0;
@@ -1996,23 +1924,15 @@ namespace PSPImg_2_PNG
                     }
                 }
             }
-            sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-            sfd2.SupportMultiDottedExtensions = true;
-
-            if (sfd2.ShowDialog() == DialogResult.OK)
-            {
-                imageFinal.Save(sfd2.FileName);
-                consoleText.Text = "Console Messages: File has been converted and saved";
-            }
-            else
-            {
-                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
-            }
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         public void ConvertImgToPNGNoColorPal()
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(ofd.FileName));
+            BinaryReader reader = new BinaryReader(File.OpenRead(curIMG));
             reader.BaseStream.Seek(28, SeekOrigin.Begin);
             byte[] imageWidthBytes = reader.ReadBytes(2);
             byte[] imageHeightBytes = reader.ReadBytes(2);
@@ -2043,19 +1963,11 @@ namespace PSPImg_2_PNG
                         currentPixelHeight++;
                         currentPixelWidth = 0;
                     }
-                }
-                sfd2.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
-                sfd2.SupportMultiDottedExtensions = true;
-
-                if (sfd2.ShowDialog() == DialogResult.OK)
-                {
-                    imageFinal2.Save(sfd2.FileName);
-                    consoleText.Text = "Console Messages: File has been converted and saved";
-                }
-                else
-            {
-                consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
             }
+            string doubleCheck = Path.GetFileNameWithoutExtension(curIMG);
+            savPNG = ((Path.GetDirectoryName(curIMG)) + ("/") + (Path.GetFileNameWithoutExtension(doubleCheck)) + ".png");
+            imageFinal2.Save(savPNG);
+            consoleText.Text = "Console Messages: File has been converted and saved";
         }
 
         private void openPNGFile(object sender, EventArgs e)
@@ -2078,36 +1990,108 @@ namespace PSPImg_2_PNG
             }
         }
 
+        private void batchPNGToImgFile(object sender, EventArgs e)
+        {
+
+            string folderPath = (Path.GetDirectoryName(ofd2.FileName));
+
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+
+            FileInfo[] Files = d.GetFiles("*.png");
+
+            foreach (FileInfo file in Files)
+            {
+                curPNG = file.FullName;
+                convertPNGToIMGFile2();
+            }
+            consoleText.Text = "Console Messages: Files has been converted and saved";
+        }
+
         private void convertPNGToIMGFile(object sender, EventArgs e)
+        {
+            curPNG = ofd2.FileName;
+            convertPNGToIMGFile2();
+        }
+
+        public void convertPNGToIMGFile2()
         {
             if (fileLoadedPNG == 1)
             {
                 consoleText.Text = "Console Messages: Converting... Please wait...";
-                sfd3.Filter = "All files (*.*)|*.*";
-                sfd3.SupportMultiDottedExtensions = true;
-
-                if (sfd3.ShowDialog() == DialogResult.OK)
+                savIMG = ( (Path.GetDirectoryName(curPNG) ) + ("/") + (Path.GetFileNameWithoutExtension(curPNG)) + ".img.psp");
+                using (FileStream fileStream = new FileStream(savIMG, FileMode.Create))
                 {
-                    using (FileStream fileStream = new FileStream(sfd3.FileName, FileMode.Create))
+                    if (useColorPalCheckbox.Checked)
                     {
-                        if (useColorPalCheckbox.Checked)
-                        {
-                            HashSet<Color> colors = new HashSet<Color>();
-                            List<int[]> colorPalList = new List<int[]>();
-                            int[] tempColorPal = new int[4] { 128, 128, 128, 128 };
-                            int[] temp_col_pal2 = new int[4] { 128, 128, 128, 128 };
-                            var myBitmap = new Bitmap(ofd2.FileName);
-                            int iIndex = 0;
-                            int iX = myBitmap.Width * myBitmap.Height;
-                            int currentPixelWidth = 0;
-                            int currentPixelHeight = 0;
-                            byte[] arrayHeader = { 0x02, 0x00, 0x00, 0x00, 0x84, 0x02, 0x84, 0x02, 0x06, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-                            byte[] arrayWidth = BitConverter.GetBytes(myBitmap.Width);
-                            byte[] arrayHeight = BitConverter.GetBytes(myBitmap.Height);
-                            fileStream.Write(arrayHeader, 0, 0x1C);
-                            fileStream.Write(arrayWidth, 0, 0x02);
-                            fileStream.Write(arrayHeight, 0, 0x02);
-                            int imageWidth = myBitmap.Width;
+                        HashSet<Color> colors = new HashSet<Color>();
+                        List<int[]> colorPalList = new List<int[]>();
+                        int[] tempColorPal = new int[4] { 128, 128, 128, 128 };
+                        int[] temp_col_pal2 = new int[4] { 128, 128, 128, 128 };
+                        var myBitmap = new Bitmap(curPNG);
+                        int iIndex = 0;
+                        int iX = myBitmap.Width * myBitmap.Height;
+                        int currentPixelWidth = 0;
+                        int currentPixelHeight = 0;
+                        byte[] arrayHeader = { 0x02, 0x00, 0x00, 0x00, 0x84, 0x02, 0x84, 0x02, 0x06, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+                        byte[] arrayWidth = BitConverter.GetBytes(myBitmap.Width);
+                        byte[] arrayHeight = BitConverter.GetBytes(myBitmap.Height);
+                        fileStream.Write(arrayHeader, 0, 0x1C);
+                        fileStream.Write(arrayWidth, 0, 0x02);
+                        fileStream.Write(arrayHeight, 0, 0x02);
+                        int imageWidth = myBitmap.Width;
+                            while (iIndex < iX)
+                            {
+                                Color pixelColor = myBitmap.GetPixel(currentPixelWidth, currentPixelHeight);
+                                byte redValue = pixelColor.R;
+                                byte greenValue = pixelColor.G;
+                                byte blueValue = pixelColor.B;
+                                byte alphaValue = pixelColor.A;
+                                tempColorPal = new int[4] { alphaValue, redValue, greenValue, blueValue };
+                                if (colors.Contains(pixelColor))
+                                {
+                                    //Console.WriteLine("RGBA value already exists in list, skipping");
+                                }
+                                else
+                                {
+                                    colors.Add(pixelColor);
+                                    colorPalList.Add(tempColorPal);
+                                    byte[] bytes = new byte[4];
+                                    bytes[0] = pixelColor.R;
+                                    bytes[1] = pixelColor.G;
+                                    bytes[2] = pixelColor.B;
+                                    bytes[3] = pixelColor.A;
+                                    fileStream.Write(bytes, 0, 0x04);
+                                }
+                                currentPixelWidth++;
+                                iIndex++;
+                                if (currentPixelWidth == imageWidth)
+                                {
+                                    currentPixelHeight++;
+                                    currentPixelWidth = 0;
+                                }
+                            }
+                            int colorPalListLength = colorPalList.Count;
+                            while (colorPalListLength < 256)
+                            {
+                                byte[] bytes = new byte[4];
+                                bytes[0] = 0x00;
+                                bytes[1] = 0x00;
+                                bytes[2] = 0x00;
+                                bytes[3] = 0xFF;
+                                fileStream.Write(bytes, 0, 0x04);
+                                tempColorPal = new int[4] { 255, 0, 0, 0 };
+                                colorPalList.Add(tempColorPal);
+                                colorPalListLength = colorPalList.Count;
+                            }
+                            if (colorPalListLength > 256)
+                            {
+                                consoleText.Text = "Console Messages: .png has over 256 colors and cannot be converted";
+                            }
+                            else
+                            {
+                                iIndex = 0;
+                                currentPixelHeight = 0;
+                                currentPixelWidth = 0;
                                 while (iIndex < iX)
                                 {
                                     Color pixelColor = myBitmap.GetPixel(currentPixelWidth, currentPixelHeight);
@@ -2116,21 +2100,8 @@ namespace PSPImg_2_PNG
                                     byte blueValue = pixelColor.B;
                                     byte alphaValue = pixelColor.A;
                                     tempColorPal = new int[4] { alphaValue, redValue, greenValue, blueValue };
-                                    if (colors.Contains(pixelColor))
-                                    {
-                                        //Console.WriteLine("RGBA value already exists in list, skipping");
-                                    }
-                                    else
-                                    {
-                                        colors.Add(pixelColor);
-                                        colorPalList.Add(tempColorPal);
-                                        byte[] bytes = new byte[4];
-                                        bytes[0] = pixelColor.R;
-                                        bytes[1] = pixelColor.G;
-                                        bytes[2] = pixelColor.B;
-                                        bytes[3] = pixelColor.A;
-                                        fileStream.Write(bytes, 0, 0x04);
-                                    }
+                                    int col_pal_index = colorPalList.FindIndex(l => Enumerable.SequenceEqual(tempColorPal, l));
+                                    fileStream.Write(BitConverter.GetBytes(col_pal_index), 0, 0x01);
                                     currentPixelWidth++;
                                     iIndex++;
                                     if (currentPixelWidth == imageWidth)
@@ -2139,94 +2110,54 @@ namespace PSPImg_2_PNG
                                         currentPixelWidth = 0;
                                     }
                                 }
-                                int colorPalListLength = colorPalList.Count;
-                                while (colorPalListLength < 256)
-                                {
-                                    byte[] bytes = new byte[4];
-                                    bytes[0] = 0x00;
-                                    bytes[1] = 0x00;
-                                    bytes[2] = 0x00;
-                                    bytes[3] = 0xFF;
-                                    fileStream.Write(bytes, 0, 0x04);
-                                    tempColorPal = new int[4] { 255, 0, 0, 0 };
-                                    colorPalList.Add(tempColorPal);
-                                    colorPalListLength = colorPalList.Count;
-                                }
-                                if (colorPalListLength > 256)
-                                {
-                                    consoleText.Text = "Console Messages: .png has over 256 colors and cannot be converted";
-                                }
-                                else
-                                {
-                                    iIndex = 0;
-                                    currentPixelHeight = 0;
-                                    currentPixelWidth = 0;
-                                    while (iIndex < iX)
-                                    {
-                                        Color pixelColor = myBitmap.GetPixel(currentPixelWidth, currentPixelHeight);
-                                        byte redValue = pixelColor.R;
-                                        byte greenValue = pixelColor.G;
-                                        byte blueValue = pixelColor.B;
-                                        byte alphaValue = pixelColor.A;
-                                        tempColorPal = new int[4] { alphaValue, redValue, greenValue, blueValue };
-                                        int col_pal_index = colorPalList.FindIndex(l => Enumerable.SequenceEqual(tempColorPal, l));
-                                        fileStream.Write(BitConverter.GetBytes(col_pal_index), 0, 0x01);
-                                        currentPixelWidth++;
-                                        iIndex++;
-                                        if (currentPixelWidth == imageWidth)
-                                        {
-                                            currentPixelHeight++;
-                                            currentPixelWidth = 0;
-                                        }
-                                    }
-                                    consoleText.Text = "Console Messages: File has been converted and saved";
-                                }
-                        }
-                        else
-                        {
-                            var myBitmap = new Bitmap(ofd2.FileName);
-                            int iIndex = 0;
-                            int iX = myBitmap.Width * myBitmap.Height;
-                            int currentPixelWidth = 0;
-                            int currentPixelHeight = 0;
-                            int imageWidth = myBitmap.Width;
-                            byte[] arrayHeader = { 0x02, 0x00, 0x00, 0x00, 0x84, 0x02, 0x84, 0x02, 0x07, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-                            byte[] arrayWidth = BitConverter.GetBytes(myBitmap.Width);
-                            byte[] arrayHeight = BitConverter.GetBytes(myBitmap.Height);
-                            fileStream.Write(arrayHeader, 0, 0x1C);
-                            fileStream.Write(arrayWidth, 0, 0x02);
-                            fileStream.Write(arrayHeight, 0, 0x02);
-                            while (iIndex < iX)
-                            {
-                                Color pixelColor = myBitmap.GetPixel(currentPixelWidth, currentPixelHeight);
-                                byte[] bytes = new byte[4];
-                                bytes[0] = pixelColor.R;
-                                bytes[1] = pixelColor.G;
-                                bytes[2] = pixelColor.B;
-                                bytes[3] = pixelColor.A;
-                                fileStream.Write(bytes, 0, 0x04);
-                                iIndex++;
-                                currentPixelWidth++;
-                                if (currentPixelWidth == imageWidth)
-                                {
-                                    currentPixelHeight++;
-                                    currentPixelWidth = 0;
-                                }
+                                consoleText.Text = "Console Messages: File has been converted and saved";
                             }
-                            consoleText.Text = "Console Messages: File has been converted and saved";
-                        }
-                        fileStream.Close();
                     }
-                }
-                else
-                {
-                    consoleText.Text = "Console Messages: Saving file was canceled, process has been ended";
+                    else
+                    {
+                        var myBitmap = new Bitmap(curPNG);
+                        int iIndex = 0;
+                        int iX = myBitmap.Width * myBitmap.Height;
+                        int currentPixelWidth = 0;
+                        int currentPixelHeight = 0;
+                        int imageWidth = myBitmap.Width;
+                        byte[] arrayHeader = { 0x02, 0x00, 0x00, 0x00, 0x84, 0x02, 0x84, 0x02, 0x07, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+                        byte[] arrayWidth = BitConverter.GetBytes(myBitmap.Width);
+                        byte[] arrayHeight = BitConverter.GetBytes(myBitmap.Height);
+                        fileStream.Write(arrayHeader, 0, 0x1C);
+                        fileStream.Write(arrayWidth, 0, 0x02);
+                        fileStream.Write(arrayHeight, 0, 0x02);
+                        while (iIndex < iX)
+                        {
+                            Color pixelColor = myBitmap.GetPixel(currentPixelWidth, currentPixelHeight);
+                            byte[] bytes = new byte[4];
+                            bytes[0] = pixelColor.R;
+                            bytes[1] = pixelColor.G;
+                            bytes[2] = pixelColor.B;
+                            bytes[3] = pixelColor.A;
+                            fileStream.Write(bytes, 0, 0x04);
+                            iIndex++;
+                            currentPixelWidth++;
+                            if (currentPixelWidth == imageWidth)
+                            {
+                                currentPixelHeight++;
+                                currentPixelWidth = 0;
+                            }
+                        }
+                        consoleText.Text = "Console Messages: File has been converted and saved";
+                    }
+                    fileStream.Close();
                 }
             }
             else
             {
                 consoleText.Text = "Console Messages: There is no .png file loaded";
             }
+        }
+
+        public void assfuck()
+        { 
+        
         }
 
         private void label1_Click(object sender, EventArgs e)
